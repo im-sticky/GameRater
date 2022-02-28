@@ -1,0 +1,14 @@
+.container {
+  padding: 0 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex-grow: 2;
+}
+
+.footer {
+  height: 4rem;
+}
