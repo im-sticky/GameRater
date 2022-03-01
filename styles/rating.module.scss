@@ -1,0 +1,39 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem;
+
+  &:first-child {
+    padding-left: 0.5rem;
+  }
+
+  &:last-child {
+    padding-right: 0.5rem;
+  }
+
+  .name {
+    font-size: 1.625rem;
+    font-weight: 600;
+    margin: 0.75rem 0 1rem;
+  }
+
+  .rating {
+    font-size: 2rem;
+    margin: 0.5rem 0 0.25rem;
+    color: #fff;
+    background: #000;
+    border: none;
+    text-align: center;
+    width: 100%;
+    padding: 0;
+  }
+
+  .image {
+    width: 100%;
+  }
+}

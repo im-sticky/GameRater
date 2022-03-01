@@ -1,8 +1,23 @@
 import Head from 'next/head';
-import Image from 'next/image';
+import html2canvas from 'html2canvas';
+import Rating from '../components/rating';
 import styles from '../styles/Home.module.scss';
+import { useState } from 'react';
 
 export default function Home() {
+  const [gameName, setGameName] = useState('Game Name');
+
+  const downloadImage = () => {
+    html2canvas(document.getElementById('image-root')).then(canvas => {
+      let link = document.createElement('a');
+
+      link.download = `${gameName}-ratings.jpg`;
+      link.target = '_blank';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -18,7 +33,18 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
+        <div id='image-root' className={styles.ratingsContainer}>
+          <input className={styles.gameName} defaultValue={gameName} onChange={e => setGameName(e.target.value)} />
+          <div className={styles.ratingsColumns}>
+            <Rating column={'Gameplay'} rating={1} />
+            <Rating column={'Narrative'} rating={2} />
+            <Rating column={'Graphics'} rating={3} />
+            <Rating column={'X-Factor'} rating={4} />
+            <Rating column={'Overall'} rating={5} />
+          </div>
+        </div>
 
+        <button type='button' onClick={downloadImage}>Download</button>
       </main>
 
       <footer className={styles.footer}>
@@ -26,4 +52,4 @@ export default function Home() {
       </footer>
     </div>
   );
-};
+}
