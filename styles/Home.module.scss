@@ -1,12 +1,43 @@
+@import './variables.module.scss';
+
 .container {
   padding: 0 2rem;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .main {
   flex-grow: 2;
+}
+
+.coverUpload {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+
+  &:not(.downloading) {
+    border: 2px dotted $color-primary;
+  }
+
+  .label {
+    display: block;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  input {
+    display: none;
+  }
+
+  img {
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+    width: 100%;
+  }
 }
 
 .gameName {
@@ -21,13 +52,15 @@
   padding: 0;
 }
 
+input.gameName {
+  border: 1px solid #000;
+}
+
 .ratingsContainer {
   padding: 0.5rem;
   border: 5px solid #000;
   background-color: #fff;
   text-align: center;
-  max-width: 1024px;
-  margin: 0 auto;
 }
 
 .ratingsColumns {
