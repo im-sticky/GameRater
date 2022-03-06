@@ -1,3 +1,5 @@
+@import 'styles/variables.module.scss';
+
 .column {
   display: flex;
   flex-direction: column;
@@ -7,20 +9,36 @@
   background: #000;
   color: #fff;
   padding: 0.25rem;
+  min-width: 6.5rem;
+  max-width: 17.5rem;
 
-  &:first-child {
-    padding-left: 0.5rem;
+  @media (min-width: #{bp-xs + 1}) and (max-width: #{bp-s}) {
+    min-width: 9rem;
   }
 
-  &:last-child {
-    padding-right: 0.5rem;
+  @media (min-width: #{bp-s + 1}) {
+    &:first-child {
+      padding-left: 0.5rem;
+    }
+
+    &:last-child {
+      padding-right: 0.5rem;
+    }
   }
 
   .name {
-    font-size: 2.375rem;
+    font-size: 1.625rem;
     font-weight: 400;
     margin: 0.75rem 0 1rem;
     letter-spacing: -0.5px;
+
+    @media (min-width: #{bp-xs + 1}) and (max-width: #{bp-s}) {
+      font-size: 2rem;
+    }
+
+    @media (min-width: #{$bp-s + 1}) {
+      font-size: 2.375rem;
+    }
   }
 
   .rating {

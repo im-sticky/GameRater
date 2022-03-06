@@ -1,12 +1,16 @@
 @import 'styles/variables.module.scss';
 
 .container {
-  padding: 1.5rem 1.5rem 0 1.5rem;
+  padding: 0.75rem 0.75rem 0 0.75rem;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   max-width: 1280px;
   margin: 0 auto;
+
+  @media (min-width: #{$bp-s + 1}) {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+  }
 }
 
 .main {
@@ -59,13 +63,21 @@
     display: block;
     width: 100%;
     object-fit: cover;
-    max-height: 500px;
+    max-height: 240px;
     object-position: center;
+
+    @media (min-width: #{bp-xs + 1}) and (max-width: #{bp-s}) {
+      max-height: 380px;
+    }
+
+    @media (min-width: #{$bp-s + 1}) {
+      max-height: 480px;
+    }
   }
 }
 
 .gameName {
-  font-size: 3.375rem;
+  font-size: 3rem;
   font-weight: 700;
   line-height: 1;
   margin: 0.5rem 0 1rem;
@@ -75,6 +87,10 @@
   width: 100%;
   padding: 0;
   letter-spacing: -0.5px;
+
+  @media (min-width: #{$bp-s + 1}) {
+    font-size: 3.375rem;
+  }
 }
 
 input.gameName {
@@ -82,15 +98,25 @@ input.gameName {
 }
 
 .ratingsContainer {
-  padding: 0.5rem;
+  padding: 0.25rem;
   border: 5px solid #000;
   background-color: #fff;
   text-align: center;
+
+  @media (min-width: #{bp-s + 1}) {
+    padding: 0.5rem;
+  }
 }
 
 .ratingsColumns {
   display: flex;
   background-color: #000;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  @media (min-width: #{$bp-s + 1}) {
+    flex-wrap: nowrap;
+  }
 }
 
 .actions {
