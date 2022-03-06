@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import styles from '../styles/rating.module.scss';
+import styles from './index.module.scss';
 
-export default function Rating({column, rating, readonly}) {
+export const Rating =({column, rating, readonly}) => {
   const [internalRating, setInternalRating] = useState(rating);
   const [image, setImage] = useState(rating);
 
@@ -22,8 +22,8 @@ export default function Rating({column, rating, readonly}) {
       <span className={styles.name}>{column}</span>
       <img src={`/ratings/${image}.png`} className={styles.image} role='presentation' alt='' />
       {readonly ?
-        <span className={styles.rating}>{rating}</span> :
-        <input type='number' defaultValue={rating} min={1} max={5} step={0.5} className={styles.rating} onChange={e => setInternalRating(e.target.value)} />}
+        <span className={styles.rating}>{internalRating}</span> :
+        <input type='number' defaultValue={internalRating} min={1} max={5} step={0.5} className={styles.rating} onChange={e => setInternalRating(e.target.value)} />}
     </div>
   );
-}
+};

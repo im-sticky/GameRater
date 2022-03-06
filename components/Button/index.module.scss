@@ -1,0 +1,22 @@
+@import 'styles/variables.module.scss';
+
+.button {
+  border: 2px solid $color-primary;
+  color: $color-primary;
+  background-color: #fff;
+  padding: 0.5rem 1rem;
+  font-weight: 400;
+  transition: color 234ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 234ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  &:hover,
+  &:active {
+    background-color: $color-primary;
+    color: #fff;
+  }
+
+  &:disabled {
+    border-color: $color-rating-2;
+    color: $color-rating-2;
+  }
+}

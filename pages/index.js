@@ -2,8 +2,9 @@ import {useEffect, useState} from 'react';
 import Head from 'next/head';
 import clsx from 'clsx';
 import html2canvas from 'html2canvas';
-import Rating from '../components/rating';
-import styles from '../styles/Home.module.scss';
+import {Rating} from 'components/Rating';
+import {Button} from 'components/Button';
+import styles from 'styles/Home.module.scss';
 
 export default function Home() {
   const [gameName, setGameName] = useState('Game Name');
@@ -29,29 +30,27 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>Game Rater</title>
-        <meta name="description" content="Create shareable video game ratings" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <meta name="msapplication-TileColor" content="#ec3e46" />
-        <meta name="theme-color" content="#ffffff" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#ec3e46" />
+        <meta name="description" content="Create and share bite-sized video game rating images" />
       </Head>
 
       <main className={styles.main}>
+        <h1 className={styles.title}>Game Rater</h1>
+        <p className={styles.description}>Create and share bite-sized video game rating images</p>
+
         <div id='image-root'>
           <label htmlFor='cover-upload' className={clsx(styles.coverUpload, {[styles.downloading]: downloadingImage})}>
             {coverFile ?
               <img src={URL.createObjectURL(coverFile)} alt={`${gameName} cover art`} /> :
-              <span className={clsx(styles.label, {hidden: downloadingImage})}>Choose a cover image</span>}
+              <span className={clsx(styles.label, {hidden: downloadingImage})}>
+                <span className={styles.labelText}>Choose a cover image (Optional)</span>
+              </span>}
 
             {!downloadingImage ? <input id='cover-upload' type='file' accept="image/*" onChange={e => setCoverFile(e.target.files[0])} /> : null}
           </label>
 
           <div className={styles.ratingsContainer}>
             {downloadingImage ?
-              <h1 className={styles.gameName}>{gameName}</h1> :
+              <h2 className={styles.gameName}>{gameName}</h2> :
               <input type='text' className={styles.gameName} defaultValue={gameName} onChange={e => setGameName(e.target.value)} />}
             <div className={styles.ratingsColumns}>
               <Rating column={'Gameplay'} rating={1} readonly={downloadingImage} />
@@ -63,7 +62,11 @@ export default function Home() {
           </div>
         </div>
 
-        {!downloadingImage && <button type='button' onClick={() => setDownloadingImage(true)}>Download</button>}
+        <div className={styles.actions}>
+          <Button onClick={() => setDownloadingImage(true)} disabled={downloadingImage}>
+            {downloadingImage ? 'Downloading...' : 'Download image'}
+          </Button>
+        </div>
       </main>
 
       <footer className={styles.footer}>
