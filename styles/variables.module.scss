@@ -6,6 +6,18 @@ $color-rating-5: rgb(236, 62, 70);
 
 $color-primary: $color-rating-5;
 
-$bp-xs: 480px;
+$bp-xs: 468px;
 $bp-s: 768px;
 $bp-m: 1024px;
+
+$transition-time-fast: 160ms;
+$transition-time-normal: 220ms;
+$transition-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+@mixin focusStates() {
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}

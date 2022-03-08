@@ -5,6 +5,7 @@ import html2canvas from 'html2canvas';
 import {Rating} from 'components/Rating';
 import {Button} from 'components/Button';
 import styles from 'styles/Home.module.scss';
+import { Footer } from 'components/Footer';
 
 export default function Home() {
   const [gameName, setGameName] = useState('Game Name');
@@ -69,9 +70,7 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className={styles.footer}>
-
-      </footer>
+      <Footer />
     </div>
   );
 }

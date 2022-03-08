@@ -1,0 +1,33 @@
+@import 'styles/variables.module.scss';
+
+
+.link {
+  color: $color-primary;
+  text-decoration: none;
+  background-image: linear-gradient(120deg, $color-primary 0%, $color-primary 100%);
+  background-repeat: no-repeat;
+  background-size: 0 0.125rem;
+  background-position: 0 100%;
+  transition: background-size $transition-time-normal $transition-ease-out-expo;
+
+  &:not(.link--no-underline) {
+    @include focusStates {
+      background-size: 100% 0.125rem;
+    }
+  }
+
+  &--icon {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+.externalLink {
+  display: inline-flex;
+  align-items: center;
+
+  &__icon {
+    font-size: 0.625rem;
+    margin-left: 0.25rem;
+  }
+}

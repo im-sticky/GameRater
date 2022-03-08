@@ -9,8 +9,7 @@
   transition: color 234ms cubic-bezier(0.22, 1, 0.36, 1),
     background-color 234ms cubic-bezier(0.22, 1, 0.36, 1);
 
-  &:hover,
-  &:active {
+  @include focusStates {
     background-color: $color-primary;
     color: #fff;
   }
