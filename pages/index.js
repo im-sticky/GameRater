@@ -5,7 +5,9 @@ import html2canvas from 'html2canvas';
 import {Rating} from 'components/Rating';
 import {Button} from 'components/Button';
 import styles from 'styles/Home.module.scss';
-import { Footer } from 'components/Footer';
+import {Footer} from 'components/Footer';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faUpload} from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
   const [gameName, setGameName] = useState('Game Name');
@@ -43,7 +45,10 @@ export default function Home() {
             {coverFile ?
               <img src={URL.createObjectURL(coverFile)} alt={`${gameName} cover art`} /> :
               <span className={clsx(styles.label, {hidden: downloadingImage})}>
-                <span className={styles.labelText}>Choose a cover image (Optional)</span>
+                <span className={styles.labelText}>
+                  <FontAwesomeIcon icon={faUpload} />
+                  Upload cover image (Optional)
+                </span>
               </span>}
 
             {!downloadingImage ? <input id='cover-upload' type='file' accept="image/*" onChange={e => setCoverFile(e.target.files[0])} /> : null}
