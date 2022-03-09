@@ -16,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     if (downloadingImage) {
-      html2canvas(document.getElementById('image-root')).then(canvas => {
+      html2canvas(document.getElementById('image-root')).then((canvas) => {
         setDownloadingImage(false);
 
         let link = document.createElement('a');
@@ -40,24 +40,40 @@ export default function Home() {
         <h1 className={styles.title}>Game Rater</h1>
         <p className={styles.description}>Create and share bite-sized video game rating images</p>
 
-        <div id='image-root'>
-          <label htmlFor='cover-upload' className={clsx(styles.coverUpload, {[styles.downloading]: downloadingImage})}>
-            {coverFile ?
-              <img src={URL.createObjectURL(coverFile)} alt={`${gameName} cover art`} /> :
+        <div id="image-root">
+          <label
+            htmlFor="cover-upload"
+            className={clsx(styles.coverUpload, {
+              [styles.downloading]: downloadingImage,
+            })}
+          >
+            {coverFile ? (
+              <img src={URL.createObjectURL(coverFile)} alt={`${gameName} cover art`} />
+            ) : (
               <span className={clsx(styles.label, {hidden: downloadingImage})}>
                 <span className={styles.labelText}>
                   <FontAwesomeIcon icon={faUpload} />
-                  Upload cover image (Optional)
+                  Upload a cover image (Optional)
                 </span>
-              </span>}
+              </span>
+            )}
 
-            {!downloadingImage ? <input id='cover-upload' type='file' accept="image/*" onChange={e => setCoverFile(e.target.files[0])} /> : null}
+            {!downloadingImage ? (
+              <input id="cover-upload" type="file" accept="image/*" onChange={(e) => setCoverFile(e.target.files[0])} />
+            ) : null}
           </label>
 
           <div className={styles.ratingsContainer}>
-            {downloadingImage ?
-              <h2 className={styles.gameName}>{gameName}</h2> :
-              <input type='text' className={styles.gameName} defaultValue={gameName} onChange={e => setGameName(e.target.value)} />}
+            {downloadingImage ? (
+              <h2 className={styles.gameName}>{gameName}</h2>
+            ) : (
+              <input
+                type="text"
+                className={styles.gameName}
+                defaultValue={gameName}
+                onChange={(e) => setGameName(e.target.value)}
+              />
+            )}
             <div className={styles.ratingsColumns}>
               <Rating column={'Gameplay'} rating={1} readonly={downloadingImage} />
               <Rating column={'Narrative'} rating={2} readonly={downloadingImage} />
