@@ -52,7 +52,7 @@ export default function Home() {
             ) : (
               <span className={clsx(styles.label, {hidden: downloadingImage})}>
                 <span className={styles.labelText}>
-                  <FontAwesomeIcon icon={faUpload} />
+                  <FontAwesomeIcon icon={faUpload} className={styles.uploadIcon} />
                   Upload a cover image (Optional)
                 </span>
               </span>
