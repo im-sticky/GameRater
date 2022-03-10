@@ -10,7 +10,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUpload} from '@fortawesome/free-solid-svg-icons';
 
 export default function Home() {
-  const [gameName, setGameName] = useState('Game Name');
+  const [gameName, setGameName] = useState('');
   const [coverFile, setCoverFile] = useState();
   const [downloadingImage, setDownloadingImage] = useState(false);
 
@@ -72,6 +72,7 @@ export default function Home() {
                 className={styles.gameName}
                 defaultValue={gameName}
                 onChange={(e) => setGameName(e.target.value)}
+                placeholder="Enter a game name"
               />
             )}
             <div className={styles.ratingsColumns}>
