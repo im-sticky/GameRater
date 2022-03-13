@@ -135,6 +135,10 @@ input.gameName {
 .actions {
   display: flex;
   margin-top: 1.5rem;
+
+  button:not(:last-child) {
+    margin-right: 1rem;
+  }
 }
 
 .footer {
@@ -146,6 +150,7 @@ input.gameName {
   position: absolute;
   font-size: 0.5rem;
   font-weight: bold;
-  bottom: 0;
+  line-height: 1;
+  bottom: 1px;
   right: 1px;
 }

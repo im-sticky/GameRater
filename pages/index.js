@@ -9,25 +9,54 @@ import {Footer} from 'components/Footer';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUpload} from '@fortawesome/free-solid-svg-icons';
 
+function generateImage() {
+  return html2canvas(document.getElementById('image-root'));
+}
+
 export default function Home() {
+  const [canCopy, setCanCopy] = useState(true);
   const [gameName, setGameName] = useState('');
   const [coverFile, setCoverFile] = useState();
-  const [downloadingImage, setDownloadingImage] = useState(false);
+  const [{downloading, generating, copying}, setState] = useState({
+    downloading: false,
+    generating: false,
+    copying: false,
+  });
 
   useEffect(() => {
-    if (downloadingImage) {
-      html2canvas(document.getElementById('image-root')).then((canvas) => {
-        setDownloadingImage(false);
+    setCanCopy(!!window.navigator.clipboard && !!window.ClipboardItem);
+  }, []);
 
-        let link = document.createElement('a');
+  useEffect(() => {
+    generateImage().then((canvas) => {
+      if (downloading) {
+        const link = document.createElement('a');
 
         link.download = `${gameName}-ratings.jpg`;
         link.target = '_blank';
         link.href = canvas.toDataURL();
         link.click();
+      } else if (copying) {
+        try {
+          canvas.toBlob((blob) => {
+            navigator.clipboard.write([
+              new ClipboardItem({
+                'image/png': new Promise(async (resolve) => resolve(blob)),
+              }),
+            ]);
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      setState({
+        downloading: false,
+        generating: false,
+        copying: false,
       });
-    }
-  }, [downloadingImage]);
+    });
+  }, [generating]);
 
   return (
     <div className={styles.container}>
@@ -44,13 +73,13 @@ export default function Home() {
           <label
             htmlFor="cover-upload"
             className={clsx(styles.coverUpload, {
-              [styles.downloading]: downloadingImage,
+              [styles.downloading]: generating,
             })}
           >
             {coverFile ? (
               <img src={URL.createObjectURL(coverFile)} alt={`${gameName} cover art`} />
             ) : (
-              <span className={clsx(styles.label, {hidden: downloadingImage})}>
+              <span className={clsx(styles.label, {hidden: generating})}>
                 <span className={styles.labelText}>
                   <FontAwesomeIcon icon={faUpload} className={styles.uploadIcon} />
                   Upload a cover image (Optional)
@@ -58,13 +87,13 @@ export default function Home() {
               </span>
             )}
 
-            {!downloadingImage ? (
+            {!generating ? (
               <input id="cover-upload" type="file" accept="image/*" onChange={(e) => setCoverFile(e.target.files[0])} />
             ) : null}
           </label>
 
           <div className={styles.ratingsContainer}>
-            {downloadingImage ? (
+            {generating ? (
               <h2 className={styles.gameName}>{gameName}</h2>
             ) : (
               <input
@@ -76,16 +105,16 @@ export default function Home() {
               />
             )}
             <div className={styles.ratingsColumns}>
-              <Rating column={'Gameplay'} rating={1} readonly={downloadingImage} />
-              <Rating column={'Narrative'} rating={2} readonly={downloadingImage} />
-              <Rating column={'Graphics'} rating={3} readonly={downloadingImage} />
+              <Rating column={'Gameplay'} rating={1} readonly={generating} />
+              <Rating column={'Narrative'} rating={2} readonly={generating} />
+              <Rating column={'Graphics'} rating={3} readonly={generating} />
               <Rating
                 column={'X-Factor'}
                 rating={4}
-                info="Uniqueness, cool concepts, or anything that does not fit in the other catagories."
-                readonly={downloadingImage}
+                info="Uniqueness, cool concepts, atmosphere."
+                readonly={generating}
               />
-              <Rating column={'Overall'} rating={5} readonly={downloadingImage} />
+              <Rating column={'Overall'} rating={5} readonly={generating} />
             </div>
 
             <p className={styles.attribution}>gamerater.vercel.app</p>
@@ -93,9 +122,33 @@ export default function Home() {
         </div>
 
         <div className={styles.actions}>
-          <Button onClick={() => setDownloadingImage(true)} disabled={downloadingImage}>
-            {downloadingImage ? 'Downloading...' : 'Download image'}
+          <Button
+            onClick={() =>
+              setState({
+                downloading: true,
+                generating: true,
+                copying: false,
+              })
+            }
+            disabled={generating}
+          >
+            {downloading ? 'Downloading...' : 'Download image'}
           </Button>
+
+          {canCopy ? (
+            <Button
+              onClick={() =>
+                setState({
+                  downloading: false,
+                  generating: true,
+                  copying: true,
+                })
+              }
+              disabled={generating}
+            >
+              {downloading ? 'Copying...' : 'Copy image'}
+            </Button>
+          ) : null}
         </div>
       </main>
 
