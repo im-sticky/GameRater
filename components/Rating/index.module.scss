@@ -9,11 +9,15 @@
   background: #000;
   color: #fff;
   padding: 0.25rem;
-  min-width: 6.5rem;
-  max-width: 17.5rem;
 
-  @media (max-width: #{$bp-s}) {
-    flex-basis: 33%;
+  @media (max-width: #{$bp-xs}) {
+    flex-basis: 50%;
+    max-width: 50%;
+  }
+
+  @media (min-width: #{$bp-xs + 1}) and (max-width: #{$bp-s}) {
+    flex-basis: (100% / 3);
+    max-width: (100% / 3);
   }
 
   @media (min-width: #{$bp-s + 1}) {
@@ -27,7 +31,7 @@
   }
 
   .rating {
-    font-family: 'Oswald', sans-serif;
+    @include oswald;
     font-size: 1.625rem;
     color: #fff;
     background: #000;
