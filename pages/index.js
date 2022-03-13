@@ -87,6 +87,8 @@ export default function Home() {
               />
               <Rating column={'Overall'} rating={5} readonly={downloadingImage} />
             </div>
+
+            <p className={styles.attribution}>gamerater.vercel.app</p>
           </div>
         </div>
 

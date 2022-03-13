@@ -110,7 +110,8 @@ input.gameName {
 }
 
 .ratingsContainer {
-  padding: 0.25rem;
+  position: relative;
+  padding: 0.5rem 0.25rem;
   border: 5px solid #000;
   background-color: #fff;
   text-align: center;
@@ -138,4 +139,13 @@ input.gameName {
 
 .footer {
   height: 4rem;
+}
+
+.attribution {
+  margin: 0;
+  position: absolute;
+  font-size: 0.5rem;
+  font-weight: bold;
+  bottom: 0;
+  right: 1px;
 }
