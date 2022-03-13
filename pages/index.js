@@ -79,7 +79,12 @@ export default function Home() {
               <Rating column={'Gameplay'} rating={1} readonly={downloadingImage} />
               <Rating column={'Narrative'} rating={2} readonly={downloadingImage} />
               <Rating column={'Graphics'} rating={3} readonly={downloadingImage} />
-              <Rating column={'X-Factor'} rating={4} readonly={downloadingImage} />
+              <Rating
+                column={'X-Factor'}
+                rating={4}
+                info="Uniqueness, cool concepts, or anything that does not fit in the other catagories."
+                readonly={downloadingImage}
+              />
               <Rating column={'Overall'} rating={5} readonly={downloadingImage} />
             </div>
           </div>

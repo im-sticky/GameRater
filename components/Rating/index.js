@@ -1,16 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import {clamp} from 'helpers';
-import styles from './index.module.scss';
-import {Button} from 'components/Button';
+import clsx from 'clsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCircleArrowDown, faCircleArrowUp} from '@fortawesome/free-solid-svg-icons';
+import {faCircleInfo, faCircleArrowDown, faCircleArrowUp} from '@fortawesome/free-solid-svg-icons';
+import {Button} from 'components/Button';
+import styles from './index.module.scss';
 
 const min = 1;
 const max = 5;
 const step = 0.5;
 
-export const Rating = ({column, rating, readonly}) => {
+export const Rating = ({column, rating, info, readonly}) => {
   const [internalRating, setInternalRating] = useState(rating);
+  const [infoVisible, setInfoVisible] = useState(false);
   const [image, setImage] = useState(rating);
 
   useEffect(() => {
@@ -27,7 +29,21 @@ export const Rating = ({column, rating, readonly}) => {
 
   return (
     <div className={styles.column}>
-      <span className={styles.name}>{column}</span>
+      <div
+        className={styles.nameContainer}
+        onMouseEnter={() => setInfoVisible(true)}
+        onMouseLeave={() => setInfoVisible(false)}
+      >
+        <h2 className={styles.name}>
+          {column}
+          {!readonly && info ? <FontAwesomeIcon icon={faCircleInfo} className={styles.infoIcon} /> : null}
+        </h2>
+        {!readonly && info ? (
+          <div className={clsx(styles.infoPanel, {[styles.hidden]: !infoVisible})}>
+            <p>{info}</p>
+          </div>
+        ) : null}
+      </div>
       <img src={`/ratings/${image}.png`} className={styles.image} role="presentation" alt="" />
       <div className={styles.spinnerContainer}>
         {readonly ? (
