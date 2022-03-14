@@ -5,7 +5,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  max-width: 1280px;
+  max-width: 1072px;
   margin: 0 auto;
 
   @media (min-width: #{$bp-s + 1}) {
@@ -19,7 +19,7 @@
 }
 
 .generateImage {
-  width: 1280px;
+  width: 1024px;
 }
 
 .title {
@@ -45,9 +45,20 @@
 }
 
 .coverUpload {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
   cursor: pointer;
+  overflow: hidden;
+  max-height: 240px;
+
+  @media (min-width: #{$bp-xs + 1}) and (max-width: #{$bp-s}) {
+    max-height: 400px;
+  }
+
+  @media (min-width: #{$bp-s + 1}) {
+    max-height: 600px;
+  }
 
   &:not(.downloading) {
     border: 2px dotted $color-primary;
@@ -75,17 +86,6 @@
     margin: 0 auto;
     display: block;
     width: 100%;
-    object-fit: cover;
-    max-height: 240px;
-    object-position: center;
-
-    @media (min-width: #{$bp-xs + 1}) and (max-width: #{$bp-s}) {
-      max-height: 380px;
-    }
-
-    @media (min-width: #{$bp-s + 1}) {
-      max-height: 480px;
-    }
   }
 }
 
