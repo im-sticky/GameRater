@@ -17,10 +17,10 @@ export default function Home() {
   const [canCopy, setCanCopy] = useState(true);
   const [gameName, setGameName] = useState('');
   const [coverFile, setCoverFile] = useState();
-  const [{downloading, generating, copying}, setState] = useState({
-    downloading: false,
-    generating: false,
-    copying: false,
+  const [{isDownloading, isGenerating, isCopying}, setState] = useState({
+    isDownloading: false,
+    isGenerating: false,
+    isCopying: false,
   });
 
   useEffect(() => {
@@ -29,14 +29,14 @@ export default function Home() {
 
   useEffect(() => {
     generateImage().then((canvas) => {
-      if (downloading) {
+      if (isDownloading) {
         const link = document.createElement('a');
 
         link.download = `${gameName}-ratings.jpg`;
         link.target = '_blank';
         link.href = canvas.toDataURL();
         link.click();
-      } else if (copying) {
+      } else if (isCopying) {
         try {
           canvas.toBlob((blob) => {
             navigator.clipboard.write([
@@ -51,12 +51,12 @@ export default function Home() {
       }
 
       setState({
-        downloading: false,
-        generating: false,
-        copying: false,
+        isDownloading: false,
+        isGenerating: false,
+        isCopying: false,
       });
     });
-  }, [generating]);
+  }, [isGenerating]);
 
   return (
     <div className={styles.container}>
@@ -69,17 +69,17 @@ export default function Home() {
         <h1 className={styles.title}>Game Rater</h1>
         <p className={styles.description}>Create and share bite-sized video game rating images</p>
 
-        <div id="image-root">
+        <div id="image-root" className={clsx(isGenerating && styles.generateImage)}>
           <label
             htmlFor="cover-upload"
             className={clsx(styles.coverUpload, {
-              [styles.downloading]: generating,
+              [styles.downloading]: isGenerating,
             })}
           >
             {coverFile ? (
               <img src={URL.createObjectURL(coverFile)} alt={`${gameName} cover art`} />
             ) : (
-              <span className={clsx(styles.label, {hidden: generating})}>
+              <span className={clsx(styles.label, {hidden: isGenerating})}>
                 <span className={styles.labelText}>
                   <FontAwesomeIcon icon={faUpload} className={styles.uploadIcon} />
                   Upload a cover image (Optional)
@@ -87,13 +87,13 @@ export default function Home() {
               </span>
             )}
 
-            {!generating ? (
+            {!isGenerating ? (
               <input id="cover-upload" type="file" accept="image/*" onChange={(e) => setCoverFile(e.target.files[0])} />
             ) : null}
           </label>
 
           <div className={styles.ratingsContainer}>
-            {generating ? (
+            {isGenerating ? (
               <h2 className={styles.gameName}>{gameName}</h2>
             ) : (
               <input
@@ -105,16 +105,16 @@ export default function Home() {
               />
             )}
             <div className={styles.ratingsColumns}>
-              <Rating column={'Gameplay'} rating={1} readonly={generating} />
-              <Rating column={'Narrative'} rating={2} readonly={generating} />
-              <Rating column={'Graphics'} rating={3} readonly={generating} />
+              <Rating column={'Gameplay'} rating={1} readonly={isGenerating} />
+              <Rating column={'Narrative'} rating={2} readonly={isGenerating} />
+              <Rating column={'Graphics'} rating={3} readonly={isGenerating} />
               <Rating
                 column={'X-Factor'}
                 rating={4}
-                info="Uniqueness, cool concepts, atmosphere."
-                readonly={generating}
+                info="Uniqueness, new ideas, things that set it apart."
+                readonly={isGenerating}
               />
-              <Rating column={'Overall'} rating={5} readonly={generating} />
+              <Rating column={'Overall'} rating={5} readonly={isGenerating} />
             </div>
 
             <p className={styles.attribution}>gamerater.vercel.app</p>
@@ -125,28 +125,28 @@ export default function Home() {
           <Button
             onClick={() =>
               setState({
-                downloading: true,
-                generating: true,
-                copying: false,
+                isDownloading: true,
+                isGenerating: true,
+                isCopying: false,
               })
             }
-            disabled={generating}
+            disabled={isGenerating}
           >
-            {downloading ? 'Downloading...' : 'Download image'}
+            {isDownloading ? 'Downloading...' : 'Download image'}
           </Button>
 
           {canCopy ? (
             <Button
               onClick={() =>
                 setState({
-                  downloading: false,
-                  generating: true,
-                  copying: true,
+                  isDownloading: false,
+                  isGenerating: true,
+                  isCopying: true,
                 })
               }
-              disabled={generating}
+              disabled={isGenerating}
             >
-              {downloading ? 'Copying...' : 'Copy image'}
+              {isCopying ? 'Copying...' : 'Copy image'}
             </Button>
           ) : null}
         </div>
