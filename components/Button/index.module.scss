@@ -15,8 +15,13 @@
 
   &:disabled {
     cursor: default;
-    border-color: $color-rating-2;
-    color: $color-rating-2;
+    border-color: $color-disabled;
+    color: $color-disabled;
     background-color: #fff;
+  }
+
+  &.active {
+    background-color: $color-primary;
+    color: #fff;
   }
 }

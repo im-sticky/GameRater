@@ -5,7 +5,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  max-width: 1072px;
+  max-width: calc(#{$export-size} + 3rem);
   margin: 0 auto;
 
   @media (min-width: #{$bp-s + 1}) {
@@ -19,7 +19,11 @@
 }
 
 .generateImage {
-  width: 1024px;
+  width: $export-size;
+
+  &.noCover {
+    padding-top: 5.125rem;
+  }
 }
 
 .title {
@@ -42,51 +46,6 @@
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.125rem;
-}
-
-.coverUpload {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  cursor: pointer;
-  overflow: hidden;
-  max-height: 240px;
-
-  @media (min-width: #{$bp-xs + 1}) and (max-width: #{$bp-s}) {
-    max-height: 400px;
-  }
-
-  @media (min-width: #{$bp-s + 1}) {
-    max-height: 600px;
-  }
-
-  &:not(.downloading) {
-    border: 2px dotted $color-primary;
-  }
-
-  .label {
-    display: block;
-    padding: 2rem;
-    text-align: center;
-  }
-
-  .uploadIcon {
-    font-size: 1rem;
-    max-width: 1rem;
-    max-height: 1rem;
-    margin-right: 0.5rem;
-  }
-
-  input {
-    display: none;
-  }
-
-  img {
-    max-width: 100%;
-    margin: 0 auto;
-    display: block;
-    width: 100%;
-  }
 }
 
 .gameName {

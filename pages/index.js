@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useRef} from 'react';
 import Head from 'next/head';
 import clsx from 'clsx';
 import html2canvas from 'html2canvas';
@@ -6,17 +6,16 @@ import {Rating} from 'components/Rating';
 import {Button} from 'components/Button';
 import styles from 'styles/Home.module.scss';
 import {Footer} from 'components/Footer';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faUpload} from '@fortawesome/free-solid-svg-icons';
+import {CoverUpload} from 'components/CoverUpload';
 
 function generateImage() {
   return html2canvas(document.getElementById('image-root'));
 }
 
 export default function Home() {
+  const gameNameRef = useRef();
   const [canCopy, setCanCopy] = useState(true);
   const [gameName, setGameName] = useState('');
-  const [coverFile, setCoverFile] = useState();
   const [{isDownloading, isGenerating, isCopying}, setState] = useState({
     isDownloading: false,
     isGenerating: false,
@@ -25,6 +24,10 @@ export default function Home() {
 
   useEffect(() => {
     setCanCopy(!!window.navigator.clipboard && !!window.ClipboardItem);
+
+    if (gameNameRef.current) {
+      gameNameRef.current.focus();
+    }
   }, []);
 
   useEffect(() => {
@@ -69,34 +72,15 @@ export default function Home() {
         <h1 className={styles.title}>Game Rater</h1>
         <p className={styles.description}>Create and share bite-sized video game rating images</p>
 
-        <div id="image-root" className={clsx(isGenerating && styles.generateImage)}>
-          <label
-            htmlFor="cover-upload"
-            className={clsx(styles.coverUpload, {
-              [styles.downloading]: isGenerating,
-            })}
-          >
-            {coverFile ? (
-              <img src={URL.createObjectURL(coverFile)} alt={`${gameName} cover art`} />
-            ) : (
-              <span className={clsx(styles.label, {hidden: isGenerating})}>
-                <span className={styles.labelText}>
-                  <FontAwesomeIcon icon={faUpload} className={styles.uploadIcon} />
-                  Upload a cover image (Optional)
-                </span>
-              </span>
-            )}
-
-            {!isGenerating ? (
-              <input id="cover-upload" type="file" accept="image/*" onChange={(e) => setCoverFile(e.target.files[0])} />
-            ) : null}
-          </label>
+        <div id="image-root" className={clsx({[styles.generateImage]: isGenerating})}>
+          <CoverUpload isGenerating={isGenerating} gameName={gameName} />
 
           <div className={styles.ratingsContainer}>
             {isGenerating ? (
               <h2 className={styles.gameName}>{gameName}</h2>
             ) : (
               <input
+                ref={gameNameRef}
                 type="text"
                 className={styles.gameName}
                 defaultValue={gameName}
@@ -111,7 +95,7 @@ export default function Home() {
               <Rating
                 column={'X-Factor'}
                 rating={4}
-                info="Uniqueness, new ideas, things that set it apart."
+                info="Uniqueness, new ideas, or things that set it apart."
                 readonly={isGenerating}
               />
               <Rating column={'Overall'} rating={5} readonly={isGenerating} />
