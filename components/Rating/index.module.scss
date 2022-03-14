@@ -9,11 +9,15 @@
   background: #000;
   color: #fff;
   padding: 0.25rem;
-  min-width: 6.5rem;
-  max-width: 17.5rem;
 
-  @media (max-width: #{$bp-s}) {
-    flex-basis: 33%;
+  @media (max-width: #{$bp-xs}) {
+    flex-basis: 50%;
+    max-width: 50%;
+  }
+
+  @media (min-width: #{$bp-xs + 1}) and (max-width: #{$bp-s}) {
+    flex-basis: (100% / 3);
+    max-width: (100% / 3);
   }
 
   @media (min-width: #{$bp-s + 1}) {
@@ -26,26 +30,9 @@
     }
   }
 
-  .name {
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.625rem;
-    font-weight: 400;
-    margin: 0.75rem 0 1rem;
-    letter-spacing: -0.5px;
-
-    @media (min-width: #{$bp-xs + 1}) and (max-width: #{$bp-s}) {
-      font-size: 2rem;
-    }
-
-    @media (min-width: #{$bp-s + 1}) {
-      font-size: 2.375rem;
-    }
-  }
-
   .rating {
-    font-family: 'Oswald', sans-serif;
+    @include oswald;
     font-size: 1.625rem;
-    margin: 0.5rem 0 0.25rem;
     color: #fff;
     background: #000;
     border: none;
@@ -64,9 +51,77 @@
 
   input.rating {
     border: 1px solid #fff;
+    line-height: 1;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type='number'] {
+      -moz-appearance: textfield;
+    }
+  }
+
+  .spinner {
+    border-width: 1px;
+    padding: 0.5rem;
+    font-size: 1.25rem;
+  }
+
+  .spinnerContainer {
+    display: flex;
+    width: 100%;
+    margin: 0.5rem 0 0.25rem;
   }
 
   .image {
     width: 100%;
+  }
+
+  .nameContainer {
+    position: relative;
+  }
+
+  .name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.625rem;
+    font-weight: 400;
+    margin: 0.75rem 0 1rem;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+
+    @media (min-width: #{$bp-xs + 1}) and (max-width: #{$bp-s}) {
+      font-size: 2rem;
+    }
+
+    @media (min-width: #{$bp-s + 1}) {
+      font-size: 2.375rem;
+    }
+  }
+
+  .infoIcon {
+    font-size: 0.875rem;
+    margin-left: 0.5rem;
+  }
+
+  .infoPanel {
+    position: absolute;
+    top: calc(100% - 1rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    padding: 0.5rem;
+    border: 1px solid $color-primary;
+    box-shadow: 0 0 2px 4px rgba($color: #000000, $alpha: 0.1);
+    background-color: #fff;
+    font-size: 0.875rem;
+    color: #000;
+
+    &.hidden {
+      display: none;
+    }
   }
 }

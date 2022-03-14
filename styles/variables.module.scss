@@ -5,6 +5,9 @@ $color-rating-4: rgb(248, 168, 67);
 $color-rating-5: rgb(236, 62, 70);
 
 $color-primary: $color-rating-5;
+$color-disabled: #777777;
+
+$export-size: 1024px;
 
 $bp-xs: 468px;
 $bp-s: 768px;
@@ -20,4 +23,9 @@ $transition-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   &:active {
     @content;
   }
+}
+
+@mixin oswald() {
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: -0.5px;
 }

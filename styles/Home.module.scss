@@ -5,7 +5,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  max-width: 1280px;
+  max-width: calc(#{$export-size} + 3rem);
   margin: 0 auto;
 
   @media (min-width: #{$bp-s + 1}) {
@@ -14,11 +14,20 @@
 }
 
 .main {
+  position: relative;
   flex-grow: 2;
 }
 
+.generateImage {
+  width: $export-size;
+
+  &.noCover {
+    padding-top: 5.125rem;
+  }
+}
+
 .title {
-  font-family: 'Oswald', sans-serif;
+  @include oswald;
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 1rem;
@@ -39,47 +48,9 @@
   font-size: 1.125rem;
 }
 
-.coverUpload {
-  display: block;
-  width: 100%;
-  cursor: pointer;
-
-  &:not(.downloading) {
-    border: 2px dotted $color-primary;
-  }
-
-  .label {
-    display: block;
-    padding: 2rem;
-    text-align: center;
-  }
-
-  input {
-    display: none;
-  }
-
-  img {
-    max-width: 100%;
-    margin: 0 auto;
-    display: block;
-    width: 100%;
-    object-fit: cover;
-    max-height: 240px;
-    object-position: center;
-
-    @media (min-width: #{bp-xs + 1}) and (max-width: #{bp-s}) {
-      max-height: 380px;
-    }
-
-    @media (min-width: #{$bp-s + 1}) {
-      max-height: 480px;
-    }
-  }
-}
-
 .gameName {
-  font-family: 'Oswald', sans-serif;
-  font-size: 3rem;
+  @include oswald;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 1;
   margin: 0.5rem 0 1rem;
@@ -88,7 +59,10 @@
   background: none;
   width: 100%;
   padding: 0;
-  letter-spacing: -0.5px;
+
+  @media (min-width: #{$bp-xs + 1}) and (max-width: #{$bp-s}) {
+    font-size: 2.5rem;
+  }
 
   @media (min-width: #{$bp-s + 1}) {
     font-size: 3.375rem;
@@ -100,12 +74,13 @@ input.gameName {
 }
 
 .ratingsContainer {
-  padding: 0.25rem;
+  position: relative;
+  padding: 0.5rem 0.25rem;
   border: 5px solid #000;
   background-color: #fff;
   text-align: center;
 
-  @media (min-width: #{bp-s + 1}) {
+  @media (min-width: #{$bp-s + 1}) {
     padding: 0.5rem;
   }
 }
@@ -124,8 +99,22 @@ input.gameName {
 .actions {
   display: flex;
   margin-top: 1.5rem;
+
+  button:not(:last-child) {
+    margin-right: 1rem;
+  }
 }
 
 .footer {
   height: 4rem;
+}
+
+.attribution {
+  margin: 0;
+  position: absolute;
+  font-size: 0.5rem;
+  font-weight: bold;
+  line-height: 1;
+  bottom: 1px;
+  right: 1px;
 }
