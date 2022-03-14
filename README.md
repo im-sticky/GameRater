@@ -9,3 +9,6 @@ npm run dev
 # or
 yarn dev
 ```
+
+## Public issues repo
+https://github.com/im-sticky/GameRater-issues/issues
