@@ -15,13 +15,28 @@
 
   &:disabled {
     cursor: default;
-    border-color: $color-disabled;
-    color: $color-disabled;
-    background-color: #fff;
+    border-color: $color-disabled !important;
+    color: $color-disabled !important;
+    background-color: #fff !important;
   }
 
   &.active {
     background-color: $color-primary;
     color: #fff;
+  }
+
+  &.secondary {
+    border-color: #000;
+    color: #000;
+
+    @include focusStates {
+      background-color: #000;
+      color: #fff;
+    }
+
+    &.active {
+      background-color: #000;
+      color: #fff;
+    }
   }
 }

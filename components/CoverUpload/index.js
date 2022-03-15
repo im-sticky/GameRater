@@ -31,6 +31,7 @@ export function CoverUpload({isGenerating, gameName}) {
       {coverFile && !isGenerating ? (
         <div className={styles.coverOptions}>
           <Button
+            secondary
             onClick={(e) => {
               e.preventDefault();
               setCoverFile(null);
@@ -38,15 +39,24 @@ export function CoverUpload({isGenerating, gameName}) {
           >
             <FontAwesomeIcon icon={faBan} />
           </Button>
-          <Button onClick={() => setAlignment('flex-start')} active={alignment === 'flex-start'}>
-            <FontAwesomeIcon icon={faAlignLeft} rotation={90} />
-          </Button>
-          <Button onClick={() => setAlignment('center')} active={alignment === 'center'}>
-            <FontAwesomeIcon icon={faAlignCenter} rotation={90} />
-          </Button>
-          <Button onClick={() => setAlignment('flex-end')} active={alignment === 'flex-end'}>
-            <FontAwesomeIcon icon={faAlignRight} rotation={90} />
-          </Button>
+          <AlignmentButton
+            icon={faAlignLeft}
+            alignment="flex-start"
+            currentAlignment={alignment}
+            setAlignment={setAlignment}
+          />
+          <AlignmentButton
+            icon={faAlignCenter}
+            alignment="center"
+            currentAlignment={alignment}
+            setAlignment={setAlignment}
+          />
+          <AlignmentButton
+            icon={faAlignRight}
+            alignment="flex-end"
+            currentAlignment={alignment}
+            setAlignment={setAlignment}
+          />
         </div>
       ) : null}
 
@@ -54,5 +64,20 @@ export function CoverUpload({isGenerating, gameName}) {
         <input id="cover-upload" type="file" accept="image/*" onChange={(e) => setCoverFile(e.target.files[0])} />
       ) : null}
     </label>
+  );
+}
+
+function AlignmentButton({alignment, currentAlignment, icon, setAlignment}) {
+  return (
+    <Button
+      secondary
+      onClick={(e) => {
+        e.preventDefault();
+        setAlignment(alignment);
+      }}
+      active={currentAlignment === alignment}
+    >
+      <FontAwesomeIcon icon={icon} rotation={90} />
+    </Button>
   );
 }

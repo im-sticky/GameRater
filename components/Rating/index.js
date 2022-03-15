@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {clamp} from 'helpers';
 import clsx from 'clsx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faCircleInfo, faCircleArrowDown, faCircleArrowUp} from '@fortawesome/free-solid-svg-icons';
+import {faCircleInfo, faArrowDown, faArrowUp} from '@fortawesome/free-solid-svg-icons';
 import {Button} from 'components/Button';
 import styles from './index.module.scss';
 
@@ -51,11 +51,12 @@ export const Rating = ({column, rating, info, readonly}) => {
         ) : (
           <>
             <Button
+              secondary
               className={styles.spinner}
               onClick={() => setInternalRating((prevRating) => clamp(prevRating - step, min, max))}
               disabled={internalRating === min}
             >
-              <FontAwesomeIcon icon={faCircleArrowDown} />
+              <FontAwesomeIcon icon={faArrowDown} />
             </Button>
             <input
               type="number"
@@ -68,11 +69,12 @@ export const Rating = ({column, rating, info, readonly}) => {
               onFocus={(e) => e.target.select()}
             />
             <Button
+              secondary
               className={styles.spinner}
               onClick={() => setInternalRating((prevRating) => clamp(prevRating + step, min, max))}
               disabled={internalRating === max}
             >
-              <FontAwesomeIcon icon={faCircleArrowUp} />
+              <FontAwesomeIcon icon={faArrowUp} />
             </Button>
           </>
         )}
