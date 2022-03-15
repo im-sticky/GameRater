@@ -1,0 +1,19 @@
+@import 'styles/variables.module.scss';
+
+.toast {
+  position: fixed;
+  background-color: $color-primary;
+  padding: 0.75rem;
+  top: 100%;
+  left: 2rem;
+  transition: transform $transition-time-normal $transition-ease-out-expo;
+
+  &.popped {
+    transform: translateY(calc(-100% - 1rem));
+  }
+
+  .message {
+    margin-bottom: 0;
+    color: #fff;
+  }
+}

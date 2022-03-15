@@ -21,6 +21,10 @@
     border: 2px dotted $color-primary;
   }
 
+  &.spaced {
+    margin-top: 6.625rem;
+  }
+
   .coverOptions {
     position: absolute;
     top: 0;

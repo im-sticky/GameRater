@@ -15,6 +15,7 @@ export function CoverUpload({isGenerating, gameName}) {
       style={{justifyContent: alignment}}
       className={clsx(styles.coverUpload, {
         [styles.downloading]: isGenerating,
+        [styles.spaced]: !coverFile && isGenerating,
       })}
     >
       {coverFile ? (

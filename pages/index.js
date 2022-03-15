@@ -7,6 +7,7 @@ import {Button} from 'components/Button';
 import styles from 'styles/Home.module.scss';
 import {Footer} from 'components/Footer';
 import {CoverUpload} from 'components/CoverUpload';
+import {Toast} from 'components/Toast';
 
 function generateImage() {
   return html2canvas(document.getElementById('image-root'));
@@ -16,10 +17,12 @@ export default function Home() {
   const gameNameRef = useRef();
   const [canCopy, setCanCopy] = useState(true);
   const [gameName, setGameName] = useState('');
-  const [{isDownloading, isGenerating, isCopying}, setState] = useState({
+  const [{isDownloading, isGenerating, isCopying, toastMessage, toastOpen}, setState] = useState({
     isDownloading: false,
     isGenerating: false,
     isCopying: false,
+    toastMessage: null,
+    toastOpen: false,
   });
 
   useEffect(() => {
@@ -31,7 +34,13 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    if (!isGenerating) {
+      return;
+    }
+
     generateImage().then((canvas) => {
+      let toastMessage;
+
       if (isDownloading) {
         const link = document.createElement('a');
 
@@ -39,6 +48,7 @@ export default function Home() {
         link.target = '_blank';
         link.href = canvas.toDataURL();
         link.click();
+        toastMessage = 'Downloaded image!';
       } else if (isCopying) {
         try {
           canvas.toBlob((blob) => {
@@ -48,18 +58,35 @@ export default function Home() {
               }),
             ]);
           });
+          toastMessage = 'Copied image!';
         } catch (error) {
           console.error(error);
         }
       }
 
-      setState({
+      setState((prevState) => ({
+        ...prevState,
         isDownloading: false,
         isGenerating: false,
         isCopying: false,
-      });
+        toastMessage,
+        toastOpen: true,
+      }));
     });
   }, [isGenerating]);
+
+  useEffect(() => {
+    if (toastOpen) {
+      setTimeout(
+        () =>
+          setState((prevState) => ({
+            ...prevState,
+            toastOpen: false,
+          })),
+        2500
+      );
+    }
+  }, [toastOpen]);
 
   return (
     <div className={styles.container}>
@@ -72,7 +99,7 @@ export default function Home() {
         <h1 className={styles.title}>Game Rater</h1>
         <p className={styles.description}>Create and share bite-sized video game rating images</p>
 
-        <div id="image-root" className={clsx({[styles.generateImage]: isGenerating})}>
+        <div id="image-root" className={clsx(styles.imageRoot, {[styles.generateImage]: isGenerating})}>
           <CoverUpload isGenerating={isGenerating} gameName={gameName} />
 
           <div className={styles.ratingsContainer}>
@@ -108,11 +135,12 @@ export default function Home() {
         <div className={styles.actions}>
           <Button
             onClick={() =>
-              setState({
+              setState((prevState) => ({
+                ...prevState,
                 isDownloading: true,
                 isGenerating: true,
                 isCopying: false,
-              })
+              }))
             }
             disabled={isGenerating}
           >
@@ -122,11 +150,12 @@ export default function Home() {
           {canCopy ? (
             <Button
               onClick={() =>
-                setState({
+                setState((prevState) => ({
+                  ...prevState,
                   isDownloading: false,
                   isGenerating: true,
                   isCopying: true,
-                })
+                }))
               }
               disabled={isGenerating}
             >
@@ -134,6 +163,8 @@ export default function Home() {
             </Button>
           ) : null}
         </div>
+
+        <Toast message={toastMessage} open={toastOpen} />
       </main>
 
       <Footer />
