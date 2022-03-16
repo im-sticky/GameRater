@@ -15,7 +15,7 @@ function generateImage() {
 
 export default function Home() {
   const title = 'Game Rater';
-  const description = 'Create and share bite-sized video game rating images';
+  const description = 'Create bite-sized video game ratings and share them online with friends and followers';
   const gameNameRef = useRef();
   const [canCopy, setCanCopy] = useState(true);
   const [gameName, setGameName] = useState('');
@@ -105,12 +105,12 @@ export default function Home() {
         <meta name="twitter:site" content="@im_sticky" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content="/ratings/5.png" />
+        <meta name="twitter:image" content="https://gamerater.vercel.app/ratings/5.png" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Game Rater</h1>
-        <p className={styles.description}>Create and share bite-sized video game rating images</p>
+        <h1 className={styles.title}>{title}</h1>
+        <p className={styles.description}>{description}</p>
 
         <div id="image-root" className={clsx(styles.imageRoot, {[styles.generateImage]: isGenerating})}>
           <CoverUpload isGenerating={isGenerating} gameName={gameName} />
