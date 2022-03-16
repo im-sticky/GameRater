@@ -1,5 +1,6 @@
 import {useEffect, useState, useRef} from 'react';
 import Head from 'next/head';
+import Script from 'next/script';
 import clsx from 'clsx';
 import html2canvas from 'html2canvas';
 import {Rating} from 'components/Rating';
@@ -179,6 +180,17 @@ export default function Home() {
       </main>
 
       <Footer />
+
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-R6CHDCP9CM"></Script>
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-R6CHDCP9CM');
+        `}
+      </Script>
     </div>
   );
 }
