@@ -14,15 +14,18 @@ function generateImage() {
 }
 
 export default function Home() {
+  const title = 'Game Rater';
+  const description = 'Create and share bite-sized video game rating images';
   const gameNameRef = useRef();
   const [canCopy, setCanCopy] = useState(true);
   const [gameName, setGameName] = useState('');
-  const [{isDownloading, isGenerating, isCopying, toastMessage, toastOpen}, setState] = useState({
+  const [{isDownloading, isGenerating, isCopying, toastMessage, toastOpen, toastError}, setState] = useState({
     isDownloading: false,
     isGenerating: false,
     isCopying: false,
     toastMessage: null,
     toastOpen: false,
+    toastError: false,
   });
 
   useEffect(() => {
@@ -39,7 +42,8 @@ export default function Home() {
     }
 
     generateImage().then((canvas) => {
-      let toastMessage;
+      let toastMessage,
+        toastError = false;
 
       if (isDownloading) {
         const link = document.createElement('a');
@@ -48,7 +52,7 @@ export default function Home() {
         link.target = '_blank';
         link.href = canvas.toDataURL();
         link.click();
-        toastMessage = 'Downloaded image!';
+        toastMessage = 'Downloading image!';
       } else if (isCopying) {
         try {
           canvas.toBlob((blob) => {
@@ -61,6 +65,8 @@ export default function Home() {
           toastMessage = 'Copied image!';
         } catch (error) {
           console.error(error);
+          toastMessage = 'Erroring copying image';
+          toastError = true;
         }
       }
 
@@ -70,6 +76,7 @@ export default function Home() {
         isGenerating: false,
         isCopying: false,
         toastMessage,
+        toastError,
         toastOpen: true,
       }));
     });
@@ -82,6 +89,7 @@ export default function Home() {
           setState((prevState) => ({
             ...prevState,
             toastOpen: false,
+            toastError: false,
           })),
         2500
       );
@@ -91,8 +99,13 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Game Rater</title>
-        <meta name="description" content="Create and share bite-sized video game rating images" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:site" content="@im_sticky" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content="/ratings/5.png" />
       </Head>
 
       <main className={styles.main}>
@@ -139,7 +152,6 @@ export default function Home() {
                 ...prevState,
                 isDownloading: true,
                 isGenerating: true,
-                isCopying: false,
               }))
             }
             disabled={isGenerating}
@@ -152,7 +164,6 @@ export default function Home() {
               onClick={() =>
                 setState((prevState) => ({
                   ...prevState,
-                  isDownloading: false,
                   isGenerating: true,
                   isCopying: true,
                 }))
@@ -164,7 +175,7 @@ export default function Home() {
           ) : null}
         </div>
 
-        <Toast message={toastMessage} open={toastOpen} />
+        <Toast message={toastMessage} open={toastOpen} error={toastError} />
       </main>
 
       <Footer />

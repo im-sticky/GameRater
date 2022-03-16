@@ -2,6 +2,8 @@
 
 .toast {
   position: fixed;
+  display: flex;
+  align-items: center;
   background-color: $color-primary;
   padding: 0.75rem;
   top: 100%;
@@ -15,5 +17,12 @@
   .message {
     margin-bottom: 0;
     color: #fff;
+    font-weight: 700;
+  }
+
+  .image {
+    max-width: 2rem;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
   }
 }

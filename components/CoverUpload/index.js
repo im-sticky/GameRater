@@ -33,6 +33,7 @@ export function CoverUpload({isGenerating, gameName}) {
         <div className={styles.coverOptions}>
           <Button
             secondary
+            title="Remove cover image"
             onClick={(e) => {
               e.preventDefault();
               setCoverFile(null);
@@ -41,18 +42,21 @@ export function CoverUpload({isGenerating, gameName}) {
             <FontAwesomeIcon icon={faBan} />
           </Button>
           <AlignmentButton
+            title="Top align image"
             icon={faAlignLeft}
             alignment="flex-start"
             currentAlignment={alignment}
             setAlignment={setAlignment}
           />
           <AlignmentButton
+            title="Center align image"
             icon={faAlignCenter}
             alignment="center"
             currentAlignment={alignment}
             setAlignment={setAlignment}
           />
           <AlignmentButton
+            title="Bottom align image"
             icon={faAlignRight}
             alignment="flex-end"
             currentAlignment={alignment}
@@ -68,10 +72,11 @@ export function CoverUpload({isGenerating, gameName}) {
   );
 }
 
-function AlignmentButton({alignment, currentAlignment, icon, setAlignment}) {
+function AlignmentButton({alignment, currentAlignment, icon, setAlignment, title}) {
   return (
     <Button
       secondary
+      title={title}
       onClick={(e) => {
         e.preventDefault();
         setAlignment(alignment);
