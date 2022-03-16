@@ -49,7 +49,7 @@ export default function Home() {
       if (isDownloading) {
         const link = document.createElement('a');
 
-        link.download = `${gameName}-ratings.jpg`;
+        link.download = `${gameName}-ratings.png`;
         link.target = '_blank';
         link.href = canvas.toDataURL();
         link.click();
