@@ -130,16 +130,37 @@ export default function Home() {
               />
             )}
             <div className={styles.ratingsColumns}>
-              <Rating column={'Gameplay'} rating={1} readonly={isGenerating} />
-              <Rating column={'Narrative'} rating={2} readonly={isGenerating} />
-              <Rating column={'Graphics'} rating={3} readonly={isGenerating} />
+              <Rating column={'Gameplay'} rating={1} info="Feel, control, and fun." readonly={isGenerating} />
+              <Rating
+                column={'Narrative'}
+                rating={2}
+                info="Story, presentation, and delivery."
+                readonly={isGenerating}
+              />
+              <Rating
+                column={'Visuals'}
+                rating={3}
+                info="Graphics, direction, style, and visual flair."
+                readonly={isGenerating}
+              />
+              <Rating
+                column={'Music'}
+                rating={3.5}
+                info="Music, sound design, and how it meshes with gameplay."
+                readonly={isGenerating}
+              />
               <Rating
                 column={'X-Factor'}
                 rating={4}
                 info="Uniqueness, new ideas, or things that set it apart."
                 readonly={isGenerating}
               />
-              <Rating column={'Overall'} rating={5} readonly={isGenerating} />
+              <Rating
+                column={'Overall'}
+                rating={5}
+                info="Taking everything into account, not necessarily an average."
+                readonly={isGenerating}
+              />
             </div>
 
             <p className={styles.attribution}>gamerater.vercel.app</p>
