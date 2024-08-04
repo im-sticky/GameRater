@@ -144,7 +144,7 @@ export default function Home() {
                 readonly={isGenerating}
               />
               <Rating
-                column={'Music'}
+                column={'Audio'}
                 rating={3.5}
                 info="Music, sound design, and how it meshes with gameplay."
                 readonly={isGenerating}
